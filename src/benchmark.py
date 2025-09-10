@@ -65,6 +65,7 @@ def roiStart():
         cpu.core.wbWidth = 4
         cpu.core.commitWidth = 4
         cpu.core.branchPred = predictor()
+    # Reset stats at the start of ROI
     stats.reset()
     yield False
 
@@ -72,6 +73,7 @@ def roiStart():
 # Functions to handle ROI end event
 def roiEnd():
     print("ROI ended")
+    # Dump stats at the end of ROI
     stats.dump()
     yield True
 
