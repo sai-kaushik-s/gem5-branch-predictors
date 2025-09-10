@@ -1,5 +1,3 @@
-import os
-import time
 from argparse import ArgumentParser
 
 from m5.objects import (
@@ -53,13 +51,25 @@ BENCHMARKS = [
 BENCHMARK_SIZES = ["simsmall", "simmedium", "simlarge"]
 
 
+# Functions to handle ROI begin event and set the O3 parameters with the chosen branch predictor
 def roiStart():
     print("ROI started")
     processor.switch()
+    for cpu in processor.get_cores():
+        cpu.core.numROBEntries = 256
+        cpu.core.IQEntries = 128
+        cpu.core.fetchWidth = 4
+        cpu.core.decodeWidth = 4
+        cpu.core.renameWidth = 4
+        cpu.core.issueWidth = 4
+        cpu.core.wbWidth = 4
+        cpu.core.commitWidth = 4
+        cpu.core.branchPred = predictor()
     stats.reset()
     yield False
 
 
+# Functions to handle ROI end event
 def roiEnd():
     print("ROI ended")
     stats.dump()
@@ -100,6 +110,7 @@ parser.add_argument(
 
 args = parser.parse_args()
 
+# Validate the arguments
 branchPredictorKey = args.branch_pred.lower()
 if branchPredictorKey not in BRANCH_PREDICTORS:
     raise ValueError(f"Unknown branch predictor type: {branchPredictorKey}")
@@ -121,6 +132,7 @@ CLOCK_FREQUENCY = "3.2GHz"
 cpuType = CPUTypes.O3
 predictor = BRANCH_PREDICTORS[branchPredictorKey]
 
+# Setup the processor with the specified parameters
 processor = SimpleSwitchableProcessor(
     starting_core_type=CPUTypes.KVM,
     switch_core_type=CPUTypes.O3,
@@ -136,6 +148,7 @@ board = X86Board(
     cache_hierarchy=cacheHierarchy,
 )
 
+# Set the boards kernels and disk images
 board.set_kernel_disk_workload(
     kernel=KernelResource("x86-linux-kernel-5.4.49"),
     disk_image=DiskImageResource("x86-parsec"),

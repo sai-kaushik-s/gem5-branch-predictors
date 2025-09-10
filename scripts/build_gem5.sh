@@ -16,6 +16,7 @@ libboost-all-dev \
 wget
 
 pip3 install six
+pip3 install numpy matplotlib pandas seaborn scipy openpyxl xlrd
 
 git clone https://gem5.googlesource.com/public/gem5
 cd gem5
