@@ -1,0 +1,11 @@
+
+        #!/bin/sh
+        echo "--- gem5: Booted successfully! ---"
+        cd /home/gem5/parsec-benchmark
+        echo "--- gem5: Building bodytrack ---"
+        ./bin/parsecmgmt -a build -p bodytrack -c gcc-hooks
+        echo "--- gem5: Running bodytrack ---"
+        ./bin/parsecmgmt -a run -p bodytrack -i simsmall -n 1 -c gcc-hooks
+        echo "--- gem5: Benchmark finished ---"
+        m5 exit
+    

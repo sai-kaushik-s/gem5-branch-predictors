@@ -1,0 +1,11 @@
+
+        #!/bin/sh
+        echo "--- gem5: Booted successfully! ---"
+        cd /home/gem5/parsec-benchmark
+        echo "--- gem5: Building blackscholes ---"
+        ./bin/parsecmgmt -a build -p blackscholes -c gcc-hooks
+        echo "--- gem5: Running blackscholes ---"
+        ./bin/parsecmgmt -a run -p blackscholes -i simmedium -n 1 -c gcc-hooks
+        echo "--- gem5: Benchmark finished ---"
+        m5 exit
+    

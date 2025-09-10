@@ -1,0 +1,11 @@
+
+        #!/bin/sh
+        echo "--- gem5: Booted successfully! ---"
+        cd /home/gem5/parsec-benchmark
+        echo "--- gem5: Building dedup ---"
+        ./bin/parsecmgmt -a build -p dedup -c gcc-hooks
+        echo "--- gem5: Running dedup ---"
+        ./bin/parsecmgmt -a run -p dedup -i simsmall -n 1 -c gcc-hooks
+        echo "--- gem5: Benchmark finished ---"
+        m5 exit
+    

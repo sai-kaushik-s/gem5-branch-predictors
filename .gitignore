@@ -39,3 +39,7 @@
 
 # debug information files
 *.dwo
+
+gem5/
+parsec-benchmark/
+.vscode/

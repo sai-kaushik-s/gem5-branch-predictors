@@ -1,0 +1,11 @@
+
+        #!/bin/sh
+        echo "--- gem5: Booted successfully! ---"
+        cd /home/gem5/parsec-benchmark
+        echo "--- gem5: Building canneal ---"
+        ./bin/parsecmgmt -a build -p canneal -c gcc-hooks
+        echo "--- gem5: Running canneal ---"
+        ./bin/parsecmgmt -a run -p canneal -i simmedium -n 1 -c gcc-hooks
+        echo "--- gem5: Benchmark finished ---"
+        m5 exit
+    
